@@ -1,0 +1,863 @@
+/* ==========================================================================
+   1. Theme & Base Setup  (Vercel-style minimalism, muted bakery palette)
+   --------------------------------------------------------------------------
+   Warm paper background, cocoa ink, dusty-rose accent used sparingly.
+   Hierarchy comes from 1px borders, spacing and type, not from color.
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Surfaces */
+    --bg-main: #f8f6f3;          /* Warm paper, softer than white */
+    --card-bg: #fdfcfa;          /* Slightly lifted surface */
+    --nav-bg: rgba(248, 246, 243, 0.82);
+    --surface-sunken: #f2eeea;   /* Inset panels */
+
+    /* Text */
+    --text-dark: #2e2528;        /* Cocoa ink (not pure black) */
+    --text-muted: #7d7377;
+
+    /* Lines */
+    --border-color: #e6e0dc;
+    --border-strong: #d3cbc6;
+
+    /* Brand */
+    --primary: #2e2528;          /* Vercel-style solid ink button */
+    --primary-hover: #4a3d41;
+    --primary-soft: #efe9e5;     /* Neutral hover fill */
+    --accent: #a8566c;           /* Dusty raspberry, used sparingly */
+    --accent-soft: #f3e4e8;
+    --accent-red: #b0506a;       /* Heart */
+
+    /* Tags */
+    --badge-bg: #e7ede2;         /* Muted pistachio */
+    --badge-text: #4a5c42;
+    --butter: #f3ecd4;           /* Muted butter */
+    --butter-text: #6e5b27;
+
+    --font-body: 'Geist', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-display: 'Geist', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --radius-sm: 6px;
+    --radius-pill: 999px;
+
+    --shadow-sm: 0 1px 2px rgba(46, 37, 40, 0.04);
+    --shadow-md: 0 1px 2px rgba(46, 37, 40, 0.04), 0 8px 24px rgba(46, 37, 40, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+input, select, textarea, button {
+    font-family: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: var(--accent-soft);
+    color: var(--text-dark);
+}
+
+/* ==========================================================================
+   2. Navigation Header
+   ========================================================================== */
+.navbar {
+    background-color: var(--nav-bg);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.7rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.brand-logo {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.03em;
+    padding: 4px 0;
+    transition: color 0.15s;
+}
+
+.brand-logo:hover {
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.nav-links a:hover {
+    color: var(--text-dark);
+    background-color: var(--primary-soft);
+}
+
+.nav-links a.active {
+    color: var(--text-dark);
+    font-weight: 600;
+    background-color: var(--surface-sunken);
+    border-color: var(--border-color);
+}
+
+.user-welcome {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-color);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    margin-right: 0.4rem;
+}
+
+.nav-links a.btn-logout,
+.btn-logout {
+    color: var(--text-muted) !important;
+}
+
+.nav-links a.btn-logout:hover,
+.btn-logout:hover {
+    color: var(--accent) !important;
+    background-color: var(--accent-soft) !important;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .nav-links a {
+        width: 100%;
+        display: block;
+        padding: 8px 10px;
+    }
+
+    .user-welcome {
+        margin-right: 0;
+    }
+}
+
+/* ==========================================================================
+   3. Main Page Layout & Hero Banner
+   ========================================================================== */
+.main-wrapper {
+    max-width: 1100px;
+    width: 100%;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+    flex: 1;
+}
+
+.hero-banner {
+    background-color: var(--card-bg);
+    background-image:
+        linear-gradient(to right, rgba(46, 37, 40, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(46, 37, 40, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: center top;
+    border: 1px solid var(--border-color);
+    padding: 3rem 2rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.hero-banner h1 {
+    font-size: 2.4rem;
+    letter-spacing: -0.045em;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.hero-banner p {
+    color: var(--text-muted);
+    font-size: 1.02rem;
+    max-width: 52ch;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   4. Forms, Auth Cards & Buttons
+   ========================================================================== */
+.auth-card, .form-container {
+    background: var(--card-bg);
+    max-width: 420px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.form-container {
+    max-width: 750px;
+}
+
+.auth-card h2, .form-container h2 {
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+input, select, textarea {
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    background-color: var(--card-bg);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #b0a5a9;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.5;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--text-dark);
+    box-shadow: 0 0 0 3px rgba(168, 86, 108, 0.14);
+}
+
+/* Button Base Styles */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary { background: var(--primary); color: #fdfcfa; }
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-secondary { background: var(--card-bg); color: var(--text-dark); border-color: var(--border-strong); }
+.btn-secondary:hover { background: var(--primary-soft); }
+
+.btn-outline { background: transparent; border-color: var(--border-strong); color: var(--text-dark); }
+.btn-outline:hover { background: var(--primary-soft); border-color: var(--text-muted); }
+
+.btn-danger { background: var(--card-bg); color: #a63a30; border-color: #e8cdc9; }
+.btn-danger:hover { background: #a63a30; color: #fdfcfa; border-color: #a63a30; }
+
+.btn-fav { background: var(--card-bg); color: var(--accent-red); border-color: var(--border-strong); }
+.btn-fav:hover { background: var(--accent-soft); border-color: #dfc0c9; }
+.btn-fav-active { background: var(--accent-soft); color: var(--accent-red); border-color: #dfc0c9; }
+.btn-fav-active:hover { background: #ecd3da; }
+
+.btn-sm { padding: 0.28rem 0.65rem; font-size: 0.8rem; }
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border-strong);
+    padding: 0;
+    transition: color 0.15s;
+}
+.btn-link:hover { color: var(--text-dark); }
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    color: var(--text-dark);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border-strong);
+}
+
+.auth-footer a:hover {
+    text-decoration-color: var(--accent);
+}
+
+/* ==========================================================================
+   5. Recipe Feed & Filter Section
+   ========================================================================== */
+.filter-section {
+    margin-bottom: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 0.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.search-form {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.search-form input[type="text"] {
+    flex: 2;
+    min-width: 220px;
+}
+
+.search-form select {
+    flex: 1;
+    min-width: 180px;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+}
+
+.recipe-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.recipe-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.category-badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 0.74rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+}
+
+.fav-count {
+    font-size: 0.82rem;
+    color: var(--accent-red);
+    font-weight: 500;
+}
+
+.recipe-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+}
+
+.recipe-card h3 a {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.recipe-card h3 a:hover {
+    color: var(--accent);
+}
+
+.recipe-card .description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.1rem;
+}
+
+.meta-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.edited-tag {
+    color: var(--butter-text);
+    background: var(--butter);
+    font-style: normal;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--radius-pill);
+    display: inline-block;
+    width: fit-content;
+}
+
+/* ==========================================================================
+   6. Recipe Details & Ingredients
+   ========================================================================== */
+.recipe-detail-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.recipe-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.3rem;
+    margin-bottom: 1.3rem;
+}
+
+.recipe-detail-header h1 {
+    font-size: 2rem;
+    letter-spacing: -0.04em;
+    color: var(--text-dark);
+    margin: 0.5rem 0 0.25rem 0;
+}
+
+.author-meta {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.recipe-desc {
+    font-size: 1.02rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    max-width: 70ch;
+}
+
+.recipe-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    align-items: start;
+}
+
+.ingredients-card, .instructions-card {
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.3rem;
+}
+
+.ingredients-card h3, .instructions-card h3 {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.ingredients-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.ingredients-list li {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.ing-row, .ingredient-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.instructions-body {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    line-height: 1.75;
+    max-width: 70ch;
+}
+
+/* ==========================================================================
+   7. Comments Section
+   ========================================================================== */
+.comments-section {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.6rem;
+}
+
+.comments-section h3 {
+    color: var(--text-dark);
+    font-size: 1.15rem;
+}
+
+.comment-card {
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.1rem;
+    margin-top: 1rem;
+}
+
+.comment-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.comment-body {
+    font-size: 0.92rem;
+    color: var(--text-dark);
+}
+
+.comment-actions {
+    margin-top: 0.6rem;
+    display: flex;
+    gap: 0.9rem;
+}
+
+/* ==========================================================================
+   8. Utilities, Alerts & Footer
+   ========================================================================== */
+.alert {
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.2rem;
+    font-size: 0.88rem;
+    border: 1px solid transparent;
+}
+
+.alert-error {
+    background: #f8ebe9;
+    color: #8c3128;
+    border-color: #ecd0cc;
+}
+
+.alert-success {
+    background: #eaf1e7;
+    color: #36563a;
+    border-color: #cfdfca;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--card-bg);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   9. Mobile Responsiveness
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        position: static;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        padding-top: 0.6rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .form-grid, .recipe-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ing-row, .ingredient-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .recipe-detail-header {
+        flex-direction: column;
+    }
+
+    .recipe-detail-container,
+    .auth-card,
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .hero-banner {
+        padding: 2rem 1.2rem;
+    }
+
+    .hero-banner h1 {
+        font-size: 1.7rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
+   10. Overflow Protection (paste at the very end of style.css)
+   ========================================================================== */
+
+/* Media and form controls never exceed their container */
+img, video, svg, canvas, iframe, table {
+    max-width: 100%;
+}
+
+img, video {
+    height: auto;
+}
+
+input, select, textarea, button {
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Long words, emails and URLs wrap instead of pushing the layout wider */
+h1, h2, h3, p, li, a, label, span,
+.description, .comment-body, .instructions-body, .recipe-desc,
+.author-meta, .meta-info, .user-welcome, .brand-logo {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* Grid and flex children are allowed to shrink below their content size */
+.nav-container > *,
+.nav-links > *,
+.search-form > *,
+.form-grid > *,
+.form-group,
+.recipe-grid > *,
+.recipe-content-grid > *,
+.recipe-detail-header > *,
+.ing-row > *,
+.ingredient-row > *,
+.card-header > *,
+.comment-meta > *,
+.action-buttons > * {
+    min-width: 0;
+}
+
+/* Every container stays inside its parent */
+.navbar,
+.nav-container,
+.main-wrapper,
+.hero-banner,
+.auth-card,
+.form-container,
+.filter-section,
+.recipe-card,
+.recipe-detail-container,
+.ingredients-card,
+.instructions-card,
+.comment-card,
+.comments-section,
+.empty-state,
+.footer {
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Cards grow with their content rather than clipping it */
+.recipe-card,
+.ingredients-card,
+.instructions-card,
+.comment-card {
+    overflow-wrap: anywhere;
+}
+
+/* The grid never forces a column wider than a small phone screen */
+.recipe-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.search-form input[type="text"],
+.search-form select {
+    min-width: min(220px, 100%);
+}
+
+/* Desktop nav wraps instead of overflowing on narrow laptop windows */
+.nav-links {
+    flex-wrap: wrap;
+}
+
+/* Wide content (code, tables) scrolls inside itself, not the page */
+pre, code, table {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+/* Last line of defense: the page itself never scrolls sideways */
+html, body {
+    max-width: 100%;
+    overflow-x: clip;
+}
